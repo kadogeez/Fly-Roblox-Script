@@ -1,8 +1,4 @@
---[[ KADOWARE SPAM GUI (Obfuscated • Instant • Cooldown) ]]
-
-local _s=string.char
-local _c=function(t)local r=""for i=1,#t do r=r.._s(t[i])end return r end
-print(_c({91,75,97,100,111,119,97,114,101,93,32,82,101,97,100,121}))
+--[[ KADOWARE SPAM GUI (Parallel Burst + Cooldown) ]]
 
 local g=game
 local S=g.GetService
@@ -14,7 +10,7 @@ local G,TB,MF=nil,nil
 local O=false
 
 -- cooldown
-local CD=30
+local COOLDOWN=30
 local LAST=0
 
 local function SM(m)
@@ -23,7 +19,9 @@ local function SM(m)
         local c=t:WaitForChild("TextChannels",5)
         if c then
             local h=c:FindFirstChild("RBXGeneral") or c:FindFirstChildWhichIsA("TextChannel")
-            if h then h:SendAsync(m) end
+            if h then
+                h:SendAsync(m)
+            end
         end
     end)
 end
@@ -108,9 +106,9 @@ local function CG()
     CB.Position=UDim2.new(1,-60,0,5)
     CB.BackgroundColor3=Color3.fromRGB(200,40,40)
     CB.Text="X"
-    CB.TextColor3=Color3.new(1,1,1)
-    CB.Font=Enum.Font.GothamBold
     CB.TextScaled=true
+    CB.Font=Enum.Font.GothamBold
+    CB.TextColor3=Color3.new(1,1,1)
     CB.Parent=MF
     Instance.new("UICorner",CB).CornerRadius=UDim.new(0,12)
 
@@ -130,25 +128,15 @@ local function CG()
         L.Position=UDim2.new(0,100,0,0)
         L.BackgroundTransparency=1
         L.Text=pl.Name
-        L.TextColor3=Color3.new(1,1,1)
         L.TextScaled=true
         L.Font=Enum.Font.GothamBold
         L.TextXAlignment=Enum.TextXAlignment.Left
+        L.TextColor3=Color3.new(1,1,1)
         L.Parent=B
-
-        local I=Instance.new("ImageLabel")
-        I.Size=UDim2.new(0,70,0,70)
-        I.Position=UDim2.new(0,15,0.5,-35)
-        I.BackgroundTransparency=1
-        pcall(function()
-            I.Image=P:GetUserThumbnailAsync(pl.UserId,Enum.ThumbnailType.HeadShot,Enum.ThumbnailSize.Size100x100)
-        end)
-        I.Parent=B
-        Instance.new("UICorner",I).CornerRadius=UDim.new(1,0)
 
         B.MouseButton1Click:Connect(function()
             local now=os.clock()
-            if now-LAST < CD then return end
+            if now-LAST < COOLDOWN then return end
             LAST=now
 
             local C={
@@ -161,8 +149,10 @@ local function CG()
                 ";morph "..pl.Name,
                 "cooked by kadoware"
             }
+
+            -- 🔥 TRUE PARALLEL BURST
             for _,v in ipairs(C) do
-                SM(v)
+                task.spawn(SM,v)
             end
         end)
     end
