@@ -1,5 +1,3 @@
---[[ KADOWARE SPAM GUI (Parallel Burst + Cooldown) ]]
-
 local g=game
 local S=g.GetService
 local P=S(g,"Players")
@@ -150,7 +148,6 @@ local function CG()
                 "cooked by kadoware"
             }
 
-            -- 🔥 TRUE PARALLEL BURST
             for _,v in ipairs(C) do
                 task.spawn(SM,v)
             end
