@@ -1,160 +1,157 @@
---[[ KADOWARE SPAM GUI (Obfuscated) ]]
+--[[ KADOWARE SPAM GUI (Obfuscated • Instant • Cooldown) ]]
 
-local _s = string.char
-local _c = function(t)
-    local r = ""
-    for i = 1, #t do
-        r = r .. _s(t[i])
-    end
-    return r
-end
+local _s=string.char
+local _c=function(t)local r=""for i=1,#t do r=r.._s(t[i])end return r end
+print(_c({91,75,97,100,111,119,97,114,101,93,32,82,101,97,100,121}))
 
-local _p = print
-_p(_c({91,75,97,100,111,119,97,114,101,83,112,97,109,93,32,76,111,97,100,105,110,103}))
+local g=game
+local S=g.GetService
+local P=S(g,"Players")
+local T=S(g,"TweenService")
+local lp=P.LocalPlayer
 
-task.wait(1.5)
+local G,TB,MF=nil,nil
+local O=false
 
-local g = game
-local S = g.GetService
-local P = S(g,"Players")
-local U = S(g,"UserInputService")
-local R = S(g,"RunService")
-local T = S(g,"TweenService")
-
-local lp = P.LocalPlayer
-local G,TB,MF = nil,nil
-local O = false
+-- cooldown
+local CD=30
+local LAST=0
 
 local function SM(m)
     pcall(function()
-        local t = S(g,"TextChatService")
-        local c = t:WaitForChild("TextChannels",5)
+        local t=S(g,"TextChatService")
+        local c=t:WaitForChild("TextChannels",5)
         if c then
-            local h = c:FindFirstChild("RBXGeneral") or c:FindFirstChildWhichIsA("TextChannel")
+            local h=c:FindFirstChild("RBXGeneral") or c:FindFirstChildWhichIsA("TextChannel")
             if h then h:SendAsync(m) end
         end
     end)
 end
 
 local function GP()
-    local ok,cg = pcall(function() return S(g,"CoreGui") end)
+    local ok,cg=pcall(function()return S(g,"CoreGui")end)
     if ok and cg then return cg end
     return lp:WaitForChild("PlayerGui",5)
 end
 
 local function TM(b)
-    O = b
+    O=b
     if b then
-        MF.Visible = true
-        T:Create(MF,TweenInfo.new(0.4,Enum.EasingStyle.Back),{
-            Position = UDim2.new(0.5,0,0.5,0),
-            BackgroundTransparency = 0.2
+        MF.Visible=true
+        T:Create(MF,TweenInfo.new(0.35,Enum.EasingStyle.Back),{
+            Position=UDim2.new(0.5,0,0.5,0),
+            BackgroundTransparency=0.2
         }):Play()
-        TB.Text = "CLOSE"
+        TB.Text="CLOSE"
     else
-        T:Create(MF,TweenInfo.new(0.3),{
-            Position = UDim2.new(0.5,0,-1,0),
-            BackgroundTransparency = 1
+        T:Create(MF,TweenInfo.new(0.25),{
+            Position=UDim2.new(0.5,0,-1,0),
+            BackgroundTransparency=1
         }):Play()
-        task.delay(0.3,function()
-            if not O then MF.Visible = false end
+        task.delay(0.25,function()
+            if not O then MF.Visible=false end
         end)
-        TB.Text = "KADOWARE"
+        TB.Text="KADOWARE"
     end
 end
 
 local function CG()
-    local par = GP()
+    local par=GP()
     if not par then return end
 
-    G = Instance.new("ScreenGui")
-    G.Name = "KWG"
-    G.ResetOnSpawn = false
-    G.Parent = par
+    G=Instance.new("ScreenGui")
+    G.Name="KWG"
+    G.ResetOnSpawn=false
+    G.Parent=par
 
-    TB = Instance.new("TextButton")
-    TB.Size = UDim2.new(0,70,0,70)
-    TB.Position = UDim2.new(0,15,0.5,-35)
-    TB.BackgroundColor3 = Color3.fromRGB(30,30,30)
-    TB.Text = "KADOWARE"
-    TB.TextColor3 = Color3.fromRGB(255,80,80)
-    TB.TextScaled = true
-    TB.Font = Enum.Font.GothamBlack
-    TB.Parent = G
-    Instance.new("UICorner",TB).CornerRadius = UDim.new(0,18)
+    TB=Instance.new("TextButton")
+    TB.Size=UDim2.new(0,70,0,70)
+    TB.Position=UDim2.new(0,15,0.5,-35)
+    TB.BackgroundColor3=Color3.fromRGB(30,30,30)
+    TB.Text="KADOWARE"
+    TB.TextColor3=Color3.fromRGB(255,80,80)
+    TB.TextScaled=true
+    TB.Font=Enum.Font.GothamBlack
+    TB.Parent=G
+    Instance.new("UICorner",TB).CornerRadius=UDim.new(0,18)
 
-    MF = Instance.new("Frame")
-    MF.Size = UDim2.new(0.4,0,0.7,0)
-    MF.Position = UDim2.new(0.5,0,0.5,0)
-    MF.AnchorPoint = Vector2.new(0.5,0.5)
-    MF.BackgroundColor3 = Color3.fromRGB(20,20,20)
-    MF.BackgroundTransparency = 0.2
-    MF.Visible = false
-    MF.Parent = G
-    Instance.new("UICorner",MF).CornerRadius = UDim.new(0,14)
+    MF=Instance.new("Frame")
+    MF.Size=UDim2.new(0.4,0,0.7,0)
+    MF.Position=UDim2.new(0.5,0,0.5,0)
+    MF.AnchorPoint=Vector2.new(0.5,0.5)
+    MF.BackgroundColor3=Color3.fromRGB(20,20,20)
+    MF.BackgroundTransparency=0.2
+    MF.Visible=false
+    MF.Parent=G
+    Instance.new("UICorner",MF).CornerRadius=UDim.new(0,14)
 
-    local TL = Instance.new("TextLabel")
-    TL.Size = UDim2.new(1,0,0,60)
-    TL.BackgroundTransparency = 1
-    TL.Text = "KADOWARE SPAM"
-    TL.TextColor3 = Color3.fromRGB(255,80,80)
-    TL.TextScaled = true
-    TL.Font = Enum.Font.GothamBlack
-    TL.Parent = MF
+    local TL=Instance.new("TextLabel")
+    TL.Size=UDim2.new(1,0,0,60)
+    TL.BackgroundTransparency=1
+    TL.Text="KADOWARE SPAM"
+    TL.TextColor3=Color3.fromRGB(255,80,80)
+    TL.TextScaled=true
+    TL.Font=Enum.Font.GothamBlack
+    TL.Parent=MF
 
-    local SC = Instance.new("ScrollingFrame")
-    SC.Size = UDim2.new(1,-20,1,-80)
-    SC.Position = UDim2.new(0,10,0,70)
-    SC.BackgroundTransparency = 1
-    SC.ScrollBarThickness = 8
-    SC.ScrollBarImageColor3 = Color3.fromRGB(255,80,80)
-    SC.Parent = MF
-    Instance.new("UIListLayout",SC).Padding = UDim.new(0,12)
+    local SC=Instance.new("ScrollingFrame")
+    SC.Size=UDim2.new(1,-20,1,-80)
+    SC.Position=UDim2.new(0,10,0,70)
+    SC.BackgroundTransparency=1
+    SC.ScrollBarThickness=8
+    SC.ScrollBarImageColor3=Color3.fromRGB(255,80,80)
+    SC.Parent=MF
+    Instance.new("UIListLayout",SC).Padding=UDim.new(0,12)
 
-    local CB = Instance.new("TextButton")
-    CB.Size = UDim2.new(0,50,0,50)
-    CB.Position = UDim2.new(1,-60,0,5)
-    CB.BackgroundColor3 = Color3.fromRGB(200,40,40)
-    CB.Text = "X"
-    CB.TextColor3 = Color3.new(1,1,1)
-    CB.Font = Enum.Font.GothamBold
-    CB.TextScaled = true
-    CB.Parent = MF
-    Instance.new("UICorner",CB).CornerRadius = UDim.new(0,12)
+    local CB=Instance.new("TextButton")
+    CB.Size=UDim2.new(0,50,0,50)
+    CB.Position=UDim2.new(1,-60,0,5)
+    CB.BackgroundColor3=Color3.fromRGB(200,40,40)
+    CB.Text="X"
+    CB.TextColor3=Color3.new(1,1,1)
+    CB.Font=Enum.Font.GothamBold
+    CB.TextScaled=true
+    CB.Parent=MF
+    Instance.new("UICorner",CB).CornerRadius=UDim.new(0,12)
 
     local function AP(pl)
-        if pl == lp then return end
-        local B = Instance.new("TextButton")
-        B.Size = UDim2.new(1,0,0,80)
-        B.BackgroundColor3 = Color3.fromRGB(35,35,35)
-        B.Text = ""
-        B.AutoButtonColor = false
-        B.Parent = SC
-        Instance.new("UICorner",B).CornerRadius = UDim.new(0,12)
+        if pl==lp then return end
 
-        local L = Instance.new("TextLabel")
-        L.Size = UDim2.new(1,-100,1,0)
-        L.Position = UDim2.new(0,100,0,0)
-        L.BackgroundTransparency = 1
-        L.Text = pl.Name
-        L.TextColor3 = Color3.new(1,1,1)
-        L.TextScaled = true
-        L.Font = Enum.Font.GothamBold
-        L.TextXAlignment = Enum.TextXAlignment.Left
-        L.Parent = B
+        local B=Instance.new("TextButton")
+        B.Size=UDim2.new(1,0,0,80)
+        B.BackgroundColor3=Color3.fromRGB(35,35,35)
+        B.Text=""
+        B.AutoButtonColor=false
+        B.Parent=SC
+        Instance.new("UICorner",B).CornerRadius=UDim.new(0,12)
 
-        local I = Instance.new("ImageLabel")
-        I.Size = UDim2.new(0,70,0,70)
-        I.Position = UDim2.new(0,15,0.5,-35)
-        I.BackgroundTransparency = 1
+        local L=Instance.new("TextLabel")
+        L.Size=UDim2.new(1,-100,1,0)
+        L.Position=UDim2.new(0,100,0,0)
+        L.BackgroundTransparency=1
+        L.Text=pl.Name
+        L.TextColor3=Color3.new(1,1,1)
+        L.TextScaled=true
+        L.Font=Enum.Font.GothamBold
+        L.TextXAlignment=Enum.TextXAlignment.Left
+        L.Parent=B
+
+        local I=Instance.new("ImageLabel")
+        I.Size=UDim2.new(0,70,0,70)
+        I.Position=UDim2.new(0,15,0.5,-35)
+        I.BackgroundTransparency=1
         pcall(function()
-            I.Image = P:GetUserThumbnailAsync(pl.UserId,Enum.ThumbnailType.HeadShot,Enum.ThumbnailSize.Size100x100)
+            I.Image=P:GetUserThumbnailAsync(pl.UserId,Enum.ThumbnailType.HeadShot,Enum.ThumbnailSize.Size100x100)
         end)
-        I.Parent = B
-        Instance.new("UICorner",I).CornerRadius = UDim.new(1,0)
+        I.Parent=B
+        Instance.new("UICorner",I).CornerRadius=UDim.new(1,0)
 
         B.MouseButton1Click:Connect(function()
-            local C = {
+            local now=os.clock()
+            if now-LAST < CD then return end
+            LAST=now
+
+            local C={
                 ";jumpscare "..pl.Name,
                 ";rocket "..pl.Name,
                 ";balloon "..pl.Name,
@@ -164,11 +161,8 @@ local function CG()
                 ";morph "..pl.Name,
                 "cooked by kadoware"
             }
-            for i,v in ipairs(C) do
-                task.spawn(function()
-                    task.wait((i-1)*0.4)
-                    SM(v)
-                end)
+            for _,v in ipairs(C) do
+                SM(v)
             end
         end)
     end
@@ -176,8 +170,8 @@ local function CG()
     for _,pl in ipairs(P:GetPlayers()) do AP(pl) end
     P.PlayerAdded:Connect(AP)
 
-    CB.MouseButton1Click:Connect(function() TM(false) end)
-    TB.MouseButton1Click:Connect(function() TM(not O) end)
+    CB.MouseButton1Click:Connect(function()TM(false)end)
+    TB.MouseButton1Click:Connect(function()TM(not O)end)
 end
 
 CG()
